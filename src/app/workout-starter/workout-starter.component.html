@@ -1,0 +1,15 @@
+<div class="header">
+    <h1>Edzésindító</h1>
+</div>
+
+<div class="container">
+    <button class="training-btn" mat-raised-button color="primary" (click) = "startWorkout()">Edzés megkezdése</button>
+    <h2>Sablonok:</h2>
+    <div class="templates">
+        <app-workout-template
+        *ngFor="let template of workoutTemplates" 
+        [title]="template.title" 
+        [exercises]="template.exercises">
+        </app-workout-template>
+    </div>
+</div>
