@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./workout-details/workout-details.component').then(m => m.WorkoutDetailsComponent)
   },
   {
+    path: 'favorites',
+    loadComponent: () => import('./favorites/favorites.component').then(m => m.FavoritesComponent),
+  },
+  {
     path: '**',
     redirectTo: ''
   }

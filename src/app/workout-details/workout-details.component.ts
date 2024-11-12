@@ -4,7 +4,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component';
+
+interface Exercise {
+  name: string;
+  weight: number | null;
+  reps: number | null;
+}
 
 @Component({
   selector: 'app-workout-details',
@@ -18,8 +26,9 @@ export class WorkoutDetailsComponent implements OnInit, OnDestroy {
   isEditing: boolean = false;
   elapsedTime: number = 0;
   timerInterval: any;
+  selectedExercises: Exercise[] = [];
 
-  constructor(private router : Router) {}
+  constructor(private router: Router, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.startTimer();
@@ -49,8 +58,25 @@ export class WorkoutDetailsComponent implements OnInit, OnDestroy {
     this.isEditing = false;
   }
 
-  addExercise() {
-    // Gyakorlat hozzáadásának logikája
+  openExerciseDialog() {
+    const dialogRef = this.dialog.open(ExerciseDialogComponent, {
+      width: '400px',
+      height: '300px'
+    });
+  
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
+        this.addExercise(result);
+      }
+    });
+  }
+
+  addExercise(name: string) {
+    this.selectedExercises.push({ name, weight: null, reps: null });
+  }
+
+  addNewSet(exercise: Exercise) {
+    this.selectedExercises.push({ ...exercise });
   }
 
   cancelWorkout() {
@@ -58,7 +84,7 @@ export class WorkoutDetailsComponent implements OnInit, OnDestroy {
   }
 
   finishWorkout() {
-    // Edzés befejezése logika
+    console.log('Edzés befejezve:', this.selectedExercises);
   }
 
   get formattedTime(): string {
@@ -67,7 +93,7 @@ export class WorkoutDetailsComponent implements OnInit, OnDestroy {
     return `${this.pad(minutes)}:${this.pad(seconds)}`;
   }
 
-  pad(value: number): string {
+  private pad(value: number): string {
     return value < 10 ? '0' + value : value.toString();
   }
 }

@@ -1,20 +1,30 @@
 <div class="workout-details">
-    <div class="timer">{{ formattedTime }}</div>
-  
-    <!-- Az edzés neve és szerkesztési lehetőség -->
-    <div class="workout-name">
-      <span *ngIf="!isEditing">{{ workoutName }}</span>
-      <input *ngIf="isEditing" [(ngModel)]="workoutName" (blur)="saveWorkoutName()" (keydown.enter)="saveWorkoutName()" />
-  
-      <button mat-icon-button (click)="toggleEditing()" aria-label="Szerkesztés">
-        <mat-icon>{{ isEditing ? 'check' : 'edit' }}</mat-icon>
+  <div class="timer">{{ formattedTime }}</div>
+
+  <!-- Az edzés neve és szerkesztési lehetőség -->
+  <div class="workout-name">
+    <span *ngIf="!isEditing">{{ workoutName }}</span>
+    <input *ngIf="isEditing" [(ngModel)]="workoutName" (blur)="saveWorkoutName()" (keydown.enter)="saveWorkoutName()" />
+    <button mat-icon-button (click)="toggleEditing()" aria-label="Szerkesztés">
+      <mat-icon>{{ isEditing ? 'check' : 'edit' }}</mat-icon>
+    </button>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button color="accent" (click)="openExerciseDialog()">Gyakorlat hozzáadása</button>
+    <button mat-button color="warn" (click)="cancelWorkout()">Edzés visszavonása</button>
+    <button mat-raised-button color="primary" class="finish-button" (click)="finishWorkout()">Befejezés</button>
+  </div>
+
+  <!-- Gyakorlatok Listája -->
+  <div *ngFor="let exercise of selectedExercises" class="exercise-entry">
+    <div class="exercise-row">
+      <span>{{ exercise.name }}</span>
+      <input type="number" placeholder="Súly (kg)" [(ngModel)]="exercise.weight" />
+      <input type="number" placeholder="Ismétlés" [(ngModel)]="exercise.reps" />
+      <button mat-icon-button color="primary" (click)="addNewSet(exercise)" aria-label="Új sor">
+        <mat-icon>add</mat-icon>
       </button>
     </div>
-  
-    <div class="actions">
-      <button mat-raised-button color="accent" (click)="addExercise()">Gyakorlat hozzáadása</button>
-      <button mat-button color="warn" (click)="cancelWorkout()">Edzés visszavonása</button>
-      <button mat-raised-button color="primary" class="finish-button" (click)="finishWorkout()">Befejezés</button>
-    </div>
   </div>
-  
+</div>

@@ -1,0 +1,12 @@
+<h2>Válassz egy gyakorlatot</h2>
+<mat-form-field appearance="fill">
+  <mat-label>Gyakorlat</mat-label>
+  <mat-select (selectionChange)="onSelect($event.value)">
+    <mat-option *ngFor="let exercise of exercises" [value]="exercise">
+      {{ exercise }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div class="actions">
+  <button mat-button (click)="onCancel()">Mégse</button>
+</div>

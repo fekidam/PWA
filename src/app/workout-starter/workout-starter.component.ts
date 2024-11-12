@@ -32,4 +32,8 @@ export class WorkoutStarterComponent {
   startWorkout() {
     this.router.navigate(['/workout-details']);
   }
+
+  goToFavorites() {
+    this.router.navigate(['/favorites']);
+  }
 }
