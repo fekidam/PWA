@@ -59,9 +59,12 @@ export class WorkoutDetailsComponent implements OnInit, OnDestroy {
   }
 
   openExerciseDialog() {
+    const availableExercises = ['Fekvenyomás', 'Guggolás', 'Húzódzkodás', 'Evezés'];
+  
     const dialogRef = this.dialog.open(ExerciseDialogComponent, {
       width: '400px',
-      height: '300px'
+      height: '300px',
+      data: { exercises: availableExercises }
     });
   
     dialogRef.afterClosed().subscribe((result: string) => {
